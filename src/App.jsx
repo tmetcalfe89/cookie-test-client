@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import "./App.css";
+import fetchData from "./fetchData";
 
 function App() {
   const [username, setUsername] = useState("");
@@ -9,7 +10,7 @@ function App() {
 
   useEffect(() => {
     async function getCurrentUser() {
-      const response = await fetch("/api/users/check");
+      const response = await fetchData("/api/users/check");
       if (response.ok) {
         const data = await response.json();
         setCurrentUser(data.username);
@@ -24,7 +25,7 @@ function App() {
     async (e) => {
       e.preventDefault();
 
-      const response = await fetch("/api/users/login", {
+      const response = await fetchData("/api/users/login", {
         headers: {
           "Content-Type": "application/json",
         },
@@ -46,7 +47,7 @@ function App() {
   );
 
   const handleLogout = useCallback(async () => {
-    const response = await fetch("/api/users/logout");
+    const response = await fetchData("/api/users/logout");
 
     if (response.ok) {
       alert("Success");
